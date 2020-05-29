@@ -1,0 +1,45 @@
+{% assign filtered_rooms = site.artworks | where: 'room', page.title %}
+<assets>
+{% for artwork in filtered_rooms %}
+  <img id="{{ artwork.title | downcase | replace: ' ', '-'}}" 
+       src="../assets/artwork/{{ artwork.image }}">
+{% endfor %}
+</assets>
+{% assign i = 0 %}
+{% assign y = -10 %}
+{% for artwork in filtered_rooms %}
+{% capture thecycle %}{% cycle 'odd', 'even' %}{% endcapture %}
+{% if thecycle == 'odd' %}
+  {% if artwork.image %}
+  <a-entity position="6 1.5 {{ y }}">
+    <a-box id="{{ thecycle }}"
+            color="tomato" 
+            depth="2" 
+            height="2.5" 
+            width="0.05">
+          <a-image 
+            position="-0.2 0 0"
+            rotation="0 -90 0"
+            src="#{{ artwork.title | downcase | replace: ' ', '-'}}"></a-image>
+    </a-box>
+  </a-entity>
+  {% endif %}
+{% else %}
+  {% if artwork.image %}
+  <a-entity position="-6 1.5 {{ y }}">
+    <a-box id="{{ thecycle }}"
+            color="tomato" 
+            depth="2" 
+            height="2.5" 
+            width="0.05">
+          <a-image 
+            position="0.2 0 0"
+            rotation="0 -90 0"
+            src="#{{ artwork.title | downcase | replace: ' ', '-'}}"></a-image>
+    </a-box>
+  </a-entity>
+  {% endif %}
+{% endif %}
+{% assign i = i | plus:1 %}
+{% assign y = y | plus:2 %}
+{% endfor %}
