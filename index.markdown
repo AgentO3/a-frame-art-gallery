@@ -1,7 +1,7 @@
 ---
 layout: rooms
 ---
-<a-entity environment="preset: forest"></a-entity>
+<a-entity environment="preset: dream"></a-entity>
 <a-entity
     arrange>
     {% assign rooms = site.rooms %}

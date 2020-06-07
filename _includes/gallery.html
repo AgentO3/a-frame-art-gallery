@@ -1,0 +1,28 @@
+{% assign filtered_rooms = site.artworks | where: 'room', page.title %}
+<assets>
+{% for artwork in filtered_rooms %}
+  <img id="{{ artwork.title | downcase | replace: ' ', '-'}}" 
+       src="../assets/artwork/{{ artwork.image }}">
+{% endfor %}
+</assets>
+<a-entity arrange-gallery>
+{% for artwork in filtered_rooms %}
+  {% if artwork.image %}
+  <a-entity class="artwork"
+    rotation="0 90 0">
+    <a-box color="tomato" 
+            depth="2" 
+            height="2" 
+            width="0.05">
+          <a-text value="{{ artwork.title }}"
+                rotation="0 -90 0"></a-text>
+          <a-image 
+            image-size
+            position="-0.2 0 0"
+            rotation="0 -90 0"
+            src="#{{ artwork.title | downcase | replace: ' ', '-'}}"></a-image>
+    </a-box>
+  </a-entity>
+  {% endif %}
+{% endfor %}
+</a-entity>

@@ -1,5 +1,5 @@
 ---
 title: Gemstones
 ---
-{% include space.html %}
+{% include gallery.html %}
 <a-entity environment="preset: forest"></a-entity>

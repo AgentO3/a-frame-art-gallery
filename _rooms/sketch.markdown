@@ -1,5 +1,5 @@
 ---
 title: Sketch
 ---
-{% include space.html %}
-<a-entity environment="preset: forest"></a-entity>
+{% include gallery.html %}
+<a-entity environment="preset: yavapai"></a-entity>

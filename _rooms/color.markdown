@@ -1,5 +1,5 @@
 ---
 title: Color
 ---
-{% include space.html %}
-<a-entity environment="preset: forest"></a-entity>
+{% include gallery.html %}
+<a-entity environment="preset: contact"></a-entity>

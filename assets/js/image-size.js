@@ -1,14 +1,14 @@
 AFRAME.registerComponent('image-size', {
     init: function () {
         let el = this.el
-        let src = el.getAttribute('src')
-        let img = document.getElementById(src.replace('#', ''))
+        let srcId = el.getAttribute('src')
+        let img = document.getElementById(srcId.replace('#', ''))
         let w = img.naturalWidth
         let h = img.naturalHeight
         let ratio = w / h
-        let expectedW = 1
-        let expectedH = expectedW / ratio
-        el.setAttribute('height', expectedH)
-        el.setAttribute('width', expectedW)
+        let newW = 1
+        let newH = newW / ratio
+        el.setAttribute('height', newH)
+        el.setAttribute('width', newW)
     }
 });
