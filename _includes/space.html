@@ -36,6 +36,7 @@
           <a-text value="{{ artwork.title }}"
                 rotation="0 -90 0"></a-text>
           <a-image 
+            image-size
             position="-0.2 0 0"
             rotation="0 -90 0"
             src="#{{ artwork.title | downcase | replace: ' ', '-'}}"></a-image>
@@ -51,6 +52,7 @@
             height="2.5" 
             width="0.05">
           <a-image 
+            image-size
             position="0.2 0 0"
             rotation="0 -90 0"
             src="#{{ artwork.title | downcase | replace: ' ', '-'}}"></a-image>
