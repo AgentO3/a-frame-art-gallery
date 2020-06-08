@@ -5,7 +5,8 @@
        src="../assets/artwork/{{ artwork.image }}">
 {% endfor %}
 </assets>
-<a-entity arrange-gallery>
+<a-entity arrange-gallery
+          rotation="0 90 0">
 {% for artwork in filtered_rooms %}
   {% if artwork.image %}
   <a-entity class="artwork"
@@ -25,4 +26,9 @@
   </a-entity>
   {% endif %}
 {% endfor %}
+  <a-link 
+    rotation="0 -90 0"
+    id="exit"
+    href="{{ '/' | relative_url }}"
+    title="Exit"></a-link>
 </a-entity>
