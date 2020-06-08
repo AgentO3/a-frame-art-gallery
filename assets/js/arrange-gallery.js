@@ -4,7 +4,7 @@ AFRAME.registerComponent('arrange-gallery', {
         let el = this.el
         let artworks = el.querySelectorAll('.artwork')
         let exit = document.getElementById('exit')
-
+        let next = document.getElementById('next')
         let half = Math.ceil(artworks.length / 2)
         let artArray = Array.prototype.slice.call(artworks)
         let leftSide = artArray.splice(0, half)
@@ -14,6 +14,12 @@ AFRAME.registerComponent('arrange-gallery', {
         exit.setAttribute(
             'position', 
             {x: d, y: 1.5, z: xSpacing / 2})
+
+        if (next) {
+            next.setAttribute(
+                'position', 
+                {x: d, y: 1.5, z: xSpacing / 2 * -1})     
+        }
 
         for (i = 0; i < leftSide.length; i++) {
             leftSide[i].setAttribute('position', 

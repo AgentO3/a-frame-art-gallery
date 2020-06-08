@@ -26,6 +26,14 @@
   </a-entity>
   {% endif %}
 {% endfor %}
+
+  {% if page.next.url %}
+      <a-link 
+      rotation="0 -90 0"
+      id="next"
+      href="{{ '/' | relative_url }}rooms/{{ page.next.title | downcase | replace: ' ', '-'}}"
+      title="{{page.next.title}}"></a-link>
+  {% endif %}
   <a-link 
     rotation="0 -90 0"
     id="exit"
