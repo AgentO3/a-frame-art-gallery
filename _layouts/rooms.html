@@ -1,16 +1,17 @@
 <html>
   {% include head.html %}
   <body>
-    <a-scene>
+    <a-scene
+    link-collide>
       {{ content }}
       <a-entity 
         id="camera"
-        cursor="rayOrigin: mouse"
         camera 
         position="0 1.6 0" 
         wasd-controls 
         rotation
         look-controls>
+        <a-box aabb-collider="objects: .link"> </a-box>
       </a-entity>
     </a-scene>
   </body>

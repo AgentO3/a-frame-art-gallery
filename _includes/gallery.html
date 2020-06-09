@@ -28,15 +28,31 @@
 {% endfor %}
 
   {% if page.next.url %}
-      <a-link 
-      rotation="0 -90 0"
+      <a-box
       id="next"
-      href="{{ '/' | relative_url }}rooms/{{ page.next.title | downcase | replace: ' ', '-'}}"
-      title="{{page.next.title}}"></a-link>
+      class="link"
+      rotation="0 0 0"
+      link="href: {{ '/' | relative_url }}rooms/{{ page.next.title | downcase | replace: ' ', '-'}}; 
+      title:{{ page.next.title }};"
+      color="black" depth="2" height="2.5" width="0.05">
+      <a-text 
+      align="center"
+      position="0 1.8 0"
+      rotation="0 -90 0"
+      value="{{ page.next.title }}"></a-text>
+     </a-box>
   {% endif %}
-  <a-link 
-    rotation="0 -90 0"
+    <a-box
     id="exit"
-    href="{{ '/' | relative_url }}"
-    title="Exit"></a-link>
+    class="link"
+    rotation="0 0 0"
+    link="href: {{ '/' | relative_url }}; 
+    title:{{ page.next.title }};"
+    color="black" depth="2" height="2.5" width="0.05">
+    <a-text 
+    align="center"
+    position="0 1.8 0"
+    rotation="0 -90 0"
+    value="Exit"></a-text>
+   </a-box>
 </a-entity>
