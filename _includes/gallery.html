@@ -11,18 +11,39 @@
   {% if artwork.image %}
   <a-entity class="artwork"
     rotation="0 90 0">
-    <a-box color="tomato" 
-            depth="2" 
-            height="2" 
-            width="0.05">
-          <a-text value="{{ artwork.title }}"
-                rotation="0 -90 0"></a-text>
+          <a-plane
+            height="0.25"
+            width="0.8"
+            position="-0.25 0 1.2"
+            rotation="0 -90 0">
+              <a-entity
+                position="-0.3 0 0">
+                <a-text 
+                  position="0 0.05 0"
+                  width="1"
+                  color="black"
+                  value="{{ artwork.artist }}"></a-text>
+                <a-text 
+                  position="0 0 0"
+                  width="1"
+                  color="black"
+                  value="{{ artwork.title }}, {{ artwork.created }}"></a-text>
+              </a-entity>
+          </a-plane>
           <a-image 
             image-size
             position="-0.2 0 0"
             rotation="0 -90 0"
-            src="#{{ artwork.title | downcase | replace: ' ', '-'}}"></a-image>
-    </a-box>
+            src="#{{ artwork.title | downcase | replace: ' ', '-'}}">
+            <a-box 
+            rotation="0 90 0"
+            position="0 0 -0.05"
+            class="frame"
+            color="tomato" 
+            width="0.05">
+            </a-box>
+          </a-image>
+          
   </a-entity>
   {% endif %}
 {% endfor %}
