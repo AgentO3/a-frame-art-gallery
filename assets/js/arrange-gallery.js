@@ -10,15 +10,37 @@ AFRAME.registerComponent('arrange-gallery', {
         let leftSide = artArray.splice(0, half)
         let rightSide = artArray.splice(-half)
         let xSpacing = 5
-        let d = xSpacing * leftSide.length + 2.5
+        let wallHeight = 4
+        
+        let roomLenghth = xSpacing * leftSide.length + 2.5
+        let wallLeft = document.createElement('a-box')
+        wallLeft.setAttribute('position', 
+                            { x: 10, 
+                              y: 1.5, 
+                              z: -5.2})
+        wallLeft.setAttribute('width', roomLenghth) 
+        wallLeft.setAttribute('height', wallHeight) 
+        wallLeft.setAttribute('depth', 0.1)                 
+        el.appendChild(wallLeft)
+
+        let wallRight = document.createElement('a-box')
+        wallRight.setAttribute('position', 
+        { x: 10, 
+          y: 1.5, 
+          z: 5.2})
+          wallRight.setAttribute('width', roomLenghth) 
+          wallRight.setAttribute('height', wallHeight) 
+          wallRight.setAttribute('depth', 0.1)                 
+        el.appendChild(wallRight)
+
         exit.setAttribute(
             'position', 
-            {x: d, y: 1.5, z: xSpacing / 2})
+            {x: roomLenghth, y: 1.5, z: xSpacing / 2})
 
         if (next) {
             next.setAttribute(
                 'position', 
-                {x: d, y: 1.5, z: xSpacing / 2 * -1})     
+                {x: roomLenghth, y: 1.5, z: xSpacing / 2 * -1})     
         }
 
         for (i = 0; i < leftSide.length; i++) {
