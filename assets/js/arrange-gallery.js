@@ -12,23 +12,24 @@ AFRAME.registerComponent('arrange-gallery', {
         let xSpacing = 5
         let wallHeight = 4
         
-        let roomLenghth = 5 + xSpacing * leftSide.length
+        let roomLenghth = xSpacing * leftSide.length
+        let startPosition = (roomLenghth / 2)
         let wallLeft = document.createElement('a-box')
         wallLeft.setAttribute('position', 
-                            { x: 7, 
+                            { x: startPosition, 
                               y: 1.5, 
                               z: -5.2})
-        wallLeft.setAttribute('width', roomLenghth) 
+        wallLeft.setAttribute('width', roomLenghth + 10) 
         wallLeft.setAttribute('height', wallHeight) 
         wallLeft.setAttribute('depth', 0.1)                 
         el.appendChild(wallLeft)
 
         let wallRight = document.createElement('a-box')
         wallRight.setAttribute('position', 
-        { x: 7, 
+        { x: startPosition, 
           y: 1.5, 
           z: 5.2})
-          wallRight.setAttribute('width', roomLenghth) 
+          wallRight.setAttribute('width', roomLenghth + 10) 
           wallRight.setAttribute('height', wallHeight) 
           wallRight.setAttribute('depth', 0.1)                 
         el.appendChild(wallRight)
@@ -45,13 +46,13 @@ AFRAME.registerComponent('arrange-gallery', {
 
         for (i = 0; i < leftSide.length; i++) {
             leftSide[i].setAttribute('position', 
-                                  { x: 5 + i * xSpacing, 
+                                  { x: i * xSpacing, 
                                     y: 1.5, 
                                     z: -5 })
         }
         for (i = 0; i < rightSide.length; i++) {
             rightSide[i].setAttribute('position', 
-                                  { x: 5 + i * xSpacing, 
+                                  { x: i * xSpacing, 
                                     y: 1.5, 
                                     z: 5 })
             rightSide[i].setAttribute('rotation', '0 -90 0')
