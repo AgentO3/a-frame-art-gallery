@@ -12,10 +12,10 @@ AFRAME.registerComponent('arrange-gallery', {
         let xSpacing = 5
         let wallHeight = 4
         
-        let roomLenghth = xSpacing * leftSide.length + 2.5
+        let roomLenghth = 5 + xSpacing * leftSide.length
         let wallLeft = document.createElement('a-box')
         wallLeft.setAttribute('position', 
-                            { x: 10, 
+                            { x: 7, 
                               y: 1.5, 
                               z: -5.2})
         wallLeft.setAttribute('width', roomLenghth) 
@@ -25,7 +25,7 @@ AFRAME.registerComponent('arrange-gallery', {
 
         let wallRight = document.createElement('a-box')
         wallRight.setAttribute('position', 
-        { x: 10, 
+        { x: 7, 
           y: 1.5, 
           z: 5.2})
           wallRight.setAttribute('width', roomLenghth) 
