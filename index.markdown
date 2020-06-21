@@ -11,7 +11,7 @@ layout: rooms
      rotation="0 90 0"
      link="href: {{ '/' | relative_url }}rooms/{{ room.title | downcase | replace: ' ', '-' }}; 
      title:{{ room.title }};"
-     color="black" depth="2" height="2.5" width="0.05">
+     color="brown" depth="2" height="2.5" width="0.05">
      <a-text 
      align="center"
      position="0 1.8 0"
