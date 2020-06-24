@@ -44,19 +44,22 @@ title: Color
 Once your `_rooms` are defined you can start adding artwork to the `_artworks` folder. Here is an example of the artworks file.
 
 ```---
-image: a-lovers-knot.jpg
-title:  A Lovers Knot
-created: July 2011
-artist: John Zanzal
-room: Sketch
-link: https://www.facebook.com/photo.php?fbid=10150741498040195&set=pb.846910194.-2207520000..&type=3&theater
+image: my-artwork.jpg
+title:  This Is My Artworld's Title
+created: 2020
+artist: FirstName LastName
+room: Color
+link: https://somedomain.com/link/to/something
 ---
+
+A more indepth description of the art piece.
+
 ```
-
-`image:` - The name of the image. This files needs to be in the `assets/artwork` folder. 
-
-`title:` - The title of the art piece.
-
+- `image:` - The name of the image. This files needs to be in the `assets/artwork` folder. 
+- `title:` - The title of the art piece.
+- `room:` - The name of the room thsi art piece will appear in.
+- `link` - If you want to link this piece to something on external web page. 
+- `below the ---` - Description of the art piece. 
 
 
 
