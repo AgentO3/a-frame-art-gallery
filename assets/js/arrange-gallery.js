@@ -5,6 +5,7 @@ AFRAME.registerComponent('arrange-gallery', {
         let artworks = el.querySelectorAll('.artwork')
         let exit = document.getElementById('exit')
         let next = document.getElementById('next')
+        let camera = document.getElementById('camera')
         let half = Math.ceil(artworks.length / 2)
         let artArray = Array.prototype.slice.call(artworks)
         let leftSide = artArray.splice(0, half)
@@ -57,6 +58,8 @@ AFRAME.registerComponent('arrange-gallery', {
                                     z: 5 })
             rightSide[i].setAttribute('rotation', '0 -90 0')
         }
+
+        camera.setAttribute('position', {x: 0, y: 0, z: 8})
 
     }
 });
