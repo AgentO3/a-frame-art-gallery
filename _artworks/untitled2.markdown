@@ -1,6 +1,6 @@
 ---
 image: untitled2.jpg
-title:  Untitled
+title:  Untitled2
 created: February 2012
 artist: John Zanzal
 room: Color

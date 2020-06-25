@@ -1,6 +1,6 @@
 ---
 image: untitled.jpg
-title:  Untitled
+title:  Untitled1
 created: June 2011
 artist: John Zanzal
 room: Sketch

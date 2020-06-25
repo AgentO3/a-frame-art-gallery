@@ -7,7 +7,7 @@ layout: rooms
     {% assign rooms = site.rooms %}
     {% for room in rooms %}
     <a-box
-     class="door" 
+     class="link" 
      rotation="0 90 0"
      link="href: {{ '/' | relative_url }}rooms/{{ room.title | downcase | replace: ' ', '-' }}; 
      title:{{ room.title }};"
@@ -19,12 +19,4 @@ layout: rooms
      value="{{ room.title }}"></a-text>
     </a-box>
     {% endfor %}
-</a-entity>
-<a-entity 
-    camera 
-    position="0 1.6 0" 
-    wasd-controls 
-    rotation
-    look-controls>
-    <a-box aabb-collider="objects: .door"> </a-box>
 </a-entity>

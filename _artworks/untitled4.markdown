@@ -1,6 +1,6 @@
 ---
 image: untitled4.jpg
-title:  Untitled
+title:  Untitled4
 created: April 2012
 artist: John Zanzal
 room: Color
