@@ -1,4 +1,4 @@
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/AgentO3/a-frame-art-gallery)
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/regarding-art-gallery/a-frame-art-gallery)
 
 # A-Frame Art Gallery
 
@@ -6,7 +6,7 @@ A VR art gallery template that uses Jekyll to generate the gallery for easy host
 
 Example here
 
-https://agento3.github.io/a-frame-art-gallery/
+https://regarding-art-gallery.github.io/a-frame-art-gallery/
 
 ## Gallery Overview
 
