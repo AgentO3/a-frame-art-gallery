@@ -8,7 +8,7 @@ https://agento3.github.io/a-frame-art-gallery/
 
 ## Gallery Overview
 
-Adding artwork to your gallery is very easy. You just need to understand these three folders and add the right files. Then just push to github and github pages will do the rest. The result is a freely hosted website that contains your VR gallery of interconncted rooms filled with your artwork.
+Adding artwork to your gallery is very easy. You just need to understand these three folders and add the right files. Then just push to github and github pages will do the rest. The result is a freely hosted website that contains your VR gallery of interconnected rooms filled with your artwork.
 
 `_rooms` - This is a space in a gallery that contains your artwork. Each room can have a unique look. Currently we are using the [aframe-environment-component](https://github.com/supermedium/aframe-environment-component). However you can do anything you want. 
 
@@ -18,7 +18,7 @@ Adding artwork to your gallery is very easy. You just need to understand these t
 
 ## Navigating the Gallery
 
-On a laptop use the directional arrows to move around the gallery. To move to the next room walk towards the door. One you collide with the door you'll be brough to the next room. 
+On a laptop use the directional arrows to move around the gallery. To move to the next room walk towards the door. One you collide with the door you'll be brought to the next room. 
 
 ## Adding Rooms and Artwork
 
@@ -45,19 +45,19 @@ Once your `_rooms` are defined you can start adding artwork to the `_artworks` f
 
 ```---
 image: my-artwork.jpg
-title:  This Is My Artworld's Title
+title:  This Is My Art's Title
 created: 2020
 artist: FirstName LastName
 room: Color
 link: https://somedomain.com/link/to/something
 ---
 
-A more indepth description of the art piece.
+A more in depth description of the art piece.
 
 ```
 - `image:` - The name of the image. This files needs to be in the `assets/artwork` folder. 
 - `title:` - The title of the art piece.
-- `room:` - The name of the room thsi art piece will appear in.
+- `room:` - The name of the room this art piece will appear in.
 - `link` - If you want to link this piece to something on external web page. 
 - `below the ---` - Description of the art piece. 
 
