@@ -1,9 +1,9 @@
 ---
-image: dreams/sherbert-land.png
+image: roomkey/sherbert-land.png
 title:  Sherbert Land
 created: 2020
 artist: Owen Zanzal
-room: Dreams
+room: Roomkey
 link: NA
 ---
 
