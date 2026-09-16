@@ -1,0 +1,29 @@
+{
+  "name": "roomkey-gallery",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "playwright test",
+    "test:authoring": "node scripts/verify-authoring.mjs",
+    "format": "prettier --write src tests scripts *.js *.json index.html public .github README.md"
+  },
+  "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.2.8",
+    "@fontsource/manrope": "^5.2.8"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.58.0",
+    "gray-matter": "^4.0.3",
+    "prettier": "^3.6.2",
+    "sharp": "^0.35.4",
+    "vite": "8.2.0"
+  }
+}

@@ -3,3 +3,11 @@ _site
 .jekyll-cache
 .jekyll-metadata
 vendor
+!assets/vendor/
+!assets/vendor/**
+node_modules/
+dist/
+dist-project/
+.playwright-cli/
+test-results/
+playwright-report/

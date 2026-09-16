@@ -1,5 +1,7 @@
-image:
-  file: .gitpod.Dockerfile
-
+image: gitpod/workspace-node
 tasks:
-  - init: bundle install
+  - init: npm ci
+    command: npm run dev -- --host 0.0.0.0
+ports:
+  - port: 5173
+    onOpen: open-preview

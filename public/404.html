@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A little off the beaten path — Roomkey</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #20231e;
+        color: #e8edcc;
+        font-family: Georgia, serif;
+      }
+      main {
+        padding: 40px;
+        max-width: 650px;
+      }
+      p {
+        font: 14px/1.8 sans-serif;
+        color: #c3c9b6;
+      }
+      h1 {
+        font-size: clamp(48px, 8vw, 85px);
+        font-weight: 400;
+        margin: 24px 0;
+      }
+      a {
+        display: inline-block;
+        color: #20231e;
+        background: #e8edcc;
+        padding: 18px 26px;
+        text-decoration: none;
+        font: 14px sans-serif;
+        margin-top: 22px;
+      }
+      a:focus-visible {
+        outline: 3px solid #ea7953;
+        outline-offset: 6px;
+      }
+      small {
+        font: 12px sans-serif;
+        letter-spacing: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <small>ROOMKEY / 404</small>
+      <h1>A little off the<br />beaten path.</h1>
+      <p>This space is empty. There's a whole collection waiting for you.</p>
+      <a id="home" href="/a-frame-art-gallery/">Back to the gallery →</a>
+    </main>
+    <script>
+      document.querySelector("#home").href = location.pathname.startsWith(
+        "/a-frame-art-gallery/",
+      )
+        ? "/a-frame-art-gallery/"
+        : "/";
+    </script>
+  </body>
+</html>

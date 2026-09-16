@@ -1,72 +1,79 @@
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/AgentO3/a-frame-art-gallery)
+# Roomkey
 
-# A-Frame Art Gallery
+A different state of art. An independent digital gallery pairing an editorial collection with an immersive A-Frame exhibition.
 
-A VR art gallery template that uses Jekyll to generate the gallery for easy hosting on Github pages. The goal is to make it very easy for artists to create VR art galleries to showcase their work online. 
+The original eight Deep Dream artworks, artist credits, and source images are preserved. This edition adds responsive layouts, artwork deep links, a keyboard-accessible viewer, artist filters, private browser-local favorites, and a sky-lit 3D gallery with guided navigation.
 
-Example here
+## Run locally
 
-https://agento3.github.io/a-frame-art-gallery/
+Use Node.js 22.12+ (Node 24 LTS recommended).
 
-## Gallery Overview
-
-Adding artwork to your gallery is very easy. You just need to understand these three folders and add the right files. Then just push to github and github pages will do the rest. The result is a freely hosted website that contains your VR gallery of interconnected rooms filled with your artwork.
-
-`_rooms` - This is a space in a gallery that contains your artwork. Each room can have a unique look. Currently we are using the [aframe-environment-component](https://github.com/supermedium/aframe-environment-component). However you can do anything you want. 
-
-`_artworks` - The markdown files in this folder represent a specific art piece. Currently this is limited to just images but the plan is to expand into other elements. In addition to the details about the art piece it also defines what room this art piece will appear in.
-
-`assets` - This is where you put images of your art pieces. 
-
-## Navigating the Gallery
-
-On a laptop use the directional arrows to move around the gallery. To move to the next room walk towards the door. One you collide with the door you'll be brought to the next room. 
-
-## Adding Rooms and Artwork
-
-### Adding Rooms
-
-Before you can add artwork you must define a room first. Inside the `_rooms` folder you will find files `markdown` files that have these contents.
-
-```
----
-title: Color
----
-{% include gallery.html %}
-<a-entity environment="preset: contact"></a-entity>
-
+```sh
+npm ci
+npm run dev
 ```
 
-`title` - Is what the room will be called. You'll need to reference this in your artwork files.
+Open the local URL printed by Vite. The gallery and collection require no API keys, account, or backend. All fonts, artwork, and the pinned A-Frame engine are served locally. The engine loads only when a visitor opens the immersive gallery.
 
-`<a-entity environment="preset: contact"></a-entity>` - Defines the environment of that room. You can change the value of present to change the room's look. You can find the [possible presets here](https://github.com/supermedium/aframe-environment-component#parameters).
-
-### Adding Art
-
-Once your `_rooms` are defined you can start adding artwork to the `_artworks` folder. Here is an example of the artworks file.
-
-```---
-image: my-artwork.jpg
-title:  This Is My Art's Title
-created: 2020
-artist: FirstName LastName
-room: Color
-link: https://somedomain.com/link/to/something
----
-
-A more in depth description of the art piece.
-
+```sh
+npm run build    # Generate a deployable static site in dist/
+npm run preview  # Preview the production build
+npm test         # Desktop + mobile browser and accessibility checks
+npm run test:authoring # Isolated room-authoring and subpath deployment checks
+npm run format   # Format the maintained application code
 ```
-- `image:` - The name of the image. This files needs to be in the `assets/artwork` folder. 
-- `title:` - The title of the art piece.
-- `room:` - The name of the room this art piece will appear in.
-- `link` - If you want to link this piece to something on external web page. 
-- `below the ---` - Description of the art piece. 
 
+Tests use installed Google Chrome locally. In CI they use Playwright Chromium; run `npx playwright install --with-deps chromium` and `CI=1 npm test` to use that configuration elsewhere.
 
+## Exploring
 
+- Select any artwork for its full image, attribution, and an editorial viewing note. Left/right arrow keys browse works; Escape closes the viewer. Links like `#work/crystal-city` open a specific work.
+- Save works with the heart button. Favorites stay in this browser's local storage and never leave the device. Private browsing or clearing site data may remove them.
+- In the virtual gallery, drag to look and use W/A/S/D to walk. Previous/next buttons move directly to a work on desktop and touchscreens. Select a painting or choose **View artwork** to inspect it.
+- Compatible WebXR browsers show **Enter VR** when an immersive session is supported. Controller rays select paintings; thumbsticks move between works. VR requires HTTPS or localhost and a compatible headset. Physical headset behavior needs device testing; desktop/mobile browser verification does not replace it.
+- If WebGL cannot start, a recovery screen links back to the complete 2D collection. Closing the gallery pauses its renderer.
 
+## Artwork authoring
 
+`_artworks/*.md` remains the source of truth. Keep original images in `assets/artwork/`; the build validates metadata and creates optimized WebP derivatives without changing those originals.
 
+```yaml
+---
+image: roomkey/my-work.jpg
+title: My Work
+created: 2026
+artist: Artist Name
+room: Roomkey
+---
+An optional plain-text description of the work.
+```
 
+Use a lowercase hyphenated Markdown filename, such as `my-work.md`. Its filename becomes its permanent link. Required fields are `image`, `title`, `created` (a four-digit year), `artist`, and `room`. The image must exist inside `assets/artwork/`. New works appear in the collection and their assigned gallery room automatically; update exhibition copy when changing the curated collection's size or story. Source descriptions are shown as plain text. The original works have no descriptions, so their viewing notes live in `src/main.js`.
 
+To add a room, create `_rooms/my-room.markdown` with front matter containing `title: My Room`. Set an artwork's `room` to that exact title. When there are multiple rooms, a room selector appears in the immersive gallery. Each room gets its own URL, `?gallery=my-room`, plus compatibility redirects at `rooms/my-room.html` and `rooms/my-room/`. Empty rooms have an explicit waiting state. The original room's A-Frame environment markup is preserved in its source file; the redesigned architecture is maintained centrally in `src/gallery.js`.
+
+## Deployment
+
+The checked-in GitHub Actions workflow builds, tests, and deploys the static site to GitHub Pages on pushes to `master` or `main`. Pull requests run verification only. Set the repository's **Settings → Pages → Source** to **GitHub Actions** when ready to publish. Nothing is deployed by running the local commands.
+
+For another static host, upload `dist/`. A relative base path is used by default. For an explicit subpath:
+
+```sh
+BASE_PATH=/a-frame-art-gallery/ npm run build
+```
+
+Old Roomkey URLs at `rooms/roomkey.html` and `rooms/roomkey/` redirect to the immersive gallery. The root Jekyll configuration, templates, and Ruby files remain as historical source; the maintained site uses Vite and `index.html`. Deploy `dist/` through the provided workflow rather than the old Jekyll branch build. The 404 page supports the original project path and root hosting; adjust its home link when hosting under a different subpath.
+
+## Verification and design
+
+Playwright tests exercise real production output, all eight images, artist filters, favorite persistence, deep links, dialog focus, reduced motion, WebGL fallback, and gallery navigation/pause/resume. Axe checks the landing page and artwork viewer against WCAG A/AA rules. Automated accessibility checks are useful evidence, not a claim of exhaustive accessibility certification.
+
+The design uses warm paper, charcoal green, pale lime, Cormorant Garamond, and Manrope. Source images retain their aspect ratios in the collection and viewer. The 3D gallery uses lightweight geometry, framed works, canvas-rendered labels, skylights, contact shadows, and bounded desktop movement.
+
+See `artifacts/` for captured visual verification, and `VERIFICATION.md` for the final checks. `npm test` also produces a local Playwright report (ignored by Git).
+
+## Credits
+
+Original gallery and artwork collection: [AgentO3/a-frame-art-gallery](https://github.com/AgentO3/a-frame-art-gallery). Art credits are carried from the original Markdown files; uncredited works remain marked Unknown. The original `Uknown` typo is corrected.
+
+A-Frame 1.8.0 is vendored from `https://aframe.io/releases/1.8.0/aframe.min.js`, with its MIT license in `assets/vendor/AFRAME-LICENSE`. The unavailable source-map reference is removed; engine code is unchanged. Manrope and Cormorant Garamond are distributed through Fontsource under the SIL Open Font License. The production build includes `THIRD-PARTY-LICENSES.txt`. No new license or rights claim is made for the original artworks.
