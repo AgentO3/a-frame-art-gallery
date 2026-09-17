@@ -1,6 +1,39 @@
 import aframeURL from "../assets/vendor/aframe-1.8.0.min.js?url";
 import { createWorld } from "./gallery-world.js";
 
+// A software rasterizer costs time in proportion to the pixel count, so the gallery
+// trades resolution for a usable frame rate when the browser has no GPU. Hosted CI
+// runners and older machines take this path.
+const SOFTWARE_DRIVER =
+  /swiftshader|llvmpipe|softpipe|software|basic render|microsoft basic|generic renderer/i;
+const RENDER_PROFILES = {
+  hardware: {
+    renderer:
+      "antialias: true; colorManagement: true; maxCanvasWidth: 2560; maxCanvasHeight: 1600",
+    pixelBudget: 0,
+    reflectionBudget: 600000,
+  },
+  software: {
+    renderer:
+      "antialias: false; colorManagement: true; maxCanvasWidth: 1280; maxCanvasHeight: 1280",
+    pixelBudget: 600000,
+    reflectionBudget: 240000,
+  },
+};
+
+// An unknown driver keeps the full quality settings, so a hidden name never costs
+// a visitor resolution.
+function detectRenderProfile(context) {
+  try {
+    const info = context.getExtension("WEBGL_debug_renderer_info");
+    if (!info) return "hardware";
+    const name = String(context.getParameter(info.UNMASKED_RENDERER_WEBGL));
+    return SOFTWARE_DRIVER.test(name) ? "software" : "hardware";
+  } catch {
+    return "hardware";
+  }
+}
+
 let enginePromise;
 function loadEngine() {
   if (window.AFRAME) return Promise.resolve();
@@ -32,6 +65,8 @@ export async function createGallery(host, artworks, callbacks) {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("webgl2");
   if (!context) throw new Error("WebGL 2 is unavailable");
+  const profileName = detectRenderProfile(context);
+  const profile = RENDER_PROFILES[profileName];
   context.getExtension("WEBGL_lose_context")?.loseContext();
   await loadEngine();
   const { THREE } = window.AFRAME;
@@ -155,10 +190,8 @@ export async function createGallery(host, artworks, callbacks) {
     });
   const scene = document.createElement("a-scene");
   scene.setAttribute("embedded", "");
-  scene.setAttribute(
-    "renderer",
-    "antialias: true; colorManagement: true; maxCanvasWidth: 2560; maxCanvasHeight: 1600",
-  );
+  scene.setAttribute("renderer", profile.renderer);
+  scene.dataset.renderProfile = profileName;
   scene.setAttribute("background", "color: #dce0d5");
   scene.setAttribute("xr-mode-ui", "enabled: false");
   scene.setAttribute("loading-screen", "enabled: false");
@@ -228,7 +261,11 @@ export async function createGallery(host, artworks, callbacks) {
   shadowContext.fillRect(24, 24, 208, 208);
   const shadowTexture = new THREE.CanvasTexture(shadowCanvas);
 
-  const world = await createWorld(THREE, scene, { backZ, benches });
+  const world = await createWorld(THREE, scene, {
+    backZ,
+    benches,
+    reflectionBudget: profile.reflectionBudget,
+  });
   // Two shared lights shade the frames and upholstery. Architecture is lightmapped.
   entity("a-light", {
     type: "hemisphere",
@@ -446,6 +483,25 @@ export async function createGallery(host, artworks, callbacks) {
     throw error;
   }
   scene.canvas.addEventListener("webglcontextlost", callbacks.onError);
+  // A-Frame fixes the pixel ratio once, at renderer setup. The software profile
+  // holds its own ratio across the first layout and every later resize. A headset
+  // owns its own resolution, so the budget steps aside while it presents.
+  function applyPixelBudget() {
+    if (!profile.pixelBudget || scene.renderer.xr.isPresenting) return;
+    const width = scene.canvas.clientWidth;
+    const height = scene.canvas.clientHeight;
+    if (!width || !height) return;
+    const ratio = Math.min(
+      window.devicePixelRatio || 1,
+      Math.max(0.5, Math.sqrt(profile.pixelBudget / (width * height))),
+    );
+    if (Math.abs(scene.renderer.getPixelRatio() - ratio) < 0.01) return;
+    scene.renderer.setPixelRatio(ratio);
+    scene.resize();
+    world.invalidate();
+  }
+  window.addEventListener("resize", applyPixelBudget);
+  applyPixelBudget();
   world.prepare(scene.renderer);
   scene.galleryWorld = world;
   scene.canvas.tabIndex = 0;
@@ -535,6 +591,7 @@ export async function createGallery(host, artworks, callbacks) {
       return scene.enterVR();
     },
     destroy() {
+      window.removeEventListener("resize", applyPixelBudget);
       scene.canvas.removeEventListener("webglcontextlost", callbacks.onError);
       scene.pause();
       scene.renderer.setAnimationLoop(null);

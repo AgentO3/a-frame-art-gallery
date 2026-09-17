@@ -5,7 +5,11 @@ import marbleRoughnessURL from "../assets/materials/marble-roughness.webp?url";
 
 // Architectural light is baked analytically into the materials. It costs the
 // same for a long exhibition as a short one: no per-artwork lights or shadow maps.
-export async function createWorld(THREE, scene, { backZ, benches }) {
+export async function createWorld(
+  THREE,
+  scene,
+  { backZ, benches, reflectionBudget = 600000 },
+) {
   const root = new THREE.Group();
   root.name = "Gallery architecture";
   const loader = new THREE.TextureLoader();
@@ -403,7 +407,7 @@ export async function createWorld(THREE, scene, { backZ, benches }) {
     const scale = Math.min(
       1,
       1024 / renderer.domElement.width,
-      Math.sqrt(600000 / pixels),
+      Math.sqrt(reflectionBudget / pixels),
     );
     const width = Math.max(1, Math.round(renderer.domElement.width * scale));
     const height = Math.max(1, Math.round(renderer.domElement.height * scale));
