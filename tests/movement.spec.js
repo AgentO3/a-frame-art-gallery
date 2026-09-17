@@ -1,5 +1,7 @@
 import { test, expect } from "@playwright/test";
 
+const movementWait = process.env.CI ? 50 : 200;
+
 test.beforeEach(async ({ page }) => {
   await page.goto("/?gallery=roomkey");
   await expect(page.locator("#gallery-loading")).toBeHidden({ timeout: 30000 });
@@ -34,7 +36,7 @@ test("WASD and arrow keys follow the view in every direction without canvas focu
       await page.getByRole("button", { name: "Visit next artwork" }).focus();
       const before = await position(page);
       await page.keyboard.down(key);
-      await page.waitForTimeout(200);
+      await page.waitForTimeout(movementWait);
       await page.keyboard.up(key);
       const after = await position(page);
       const dx = after.x - before.x;
