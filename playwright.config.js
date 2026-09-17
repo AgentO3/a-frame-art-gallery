@@ -5,12 +5,19 @@ export default defineConfig({
   timeout: 45000,
   expect: { timeout: 10000 },
   fullyParallel: true,
-  workers: 2,
+  // Software WebGL rendering competes for the hosted runner's CPU cores.
+  workers: process.env.CI ? 1 : 2,
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
     baseURL: "http://127.0.0.1:4174",
     channel: process.env.CI ? "chromium" : "chrome",
-    trace: "retain-on-failure",
+    trace: {
+      mode: "retain-on-failure",
+      // Continuous and per-action screenshots stall software WebGL readback.
+      // Keep DOM/network traces and the separate screenshot on failure.
+      screenshots: !process.env.CI,
+      snapshots: { dom: true, aria: true, screen: !process.env.CI },
+    },
     screenshot: "only-on-failure",
   },
   projects: [
