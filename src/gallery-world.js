@@ -8,7 +8,7 @@ import marbleRoughnessURL from "../assets/materials/marble-roughness.webp?url";
 export async function createWorld(
   THREE,
   scene,
-  { backZ, benches, reflectionBudget = 600000 },
+  { backZ, benches, reflectionBudget = 600000, reflectionInterval = 0 },
 ) {
   const root = new THREE.Group();
   root.name = "Gallery architecture";
@@ -397,12 +397,16 @@ export async function createWorld(
     direction = new THREE.Vector3(),
     up = new THREE.Vector3();
   let reflectionFrames = 0;
+  let lastReflectionAt = 0;
   let environment;
   floor.onBeforeRender = (renderer, world, camera) => {
     floorMaterial.uniforms.reflectionEnabled.value = renderer.xr.isPresenting
       ? 0
       : 1;
     if (renderer.xr.isPresenting) return;
+    const now = performance.now();
+    if (reflectionInterval && now - lastReflectionAt < reflectionInterval)
+      return;
     const pixels = renderer.domElement.width * renderer.domElement.height;
     const scale = Math.min(
       1,
@@ -454,6 +458,7 @@ export async function createWorld(
     lastView.copy(camera.matrixWorld);
     lastProjection.copy(camera.projectionMatrix);
     reflectionFrames++;
+    lastReflectionAt = now;
   };
   return {
     prepare(renderer) {

@@ -18,6 +18,7 @@ const RENDER_PROFILES = {
       "antialias: false; colorManagement: true; maxCanvasWidth: 1280; maxCanvasHeight: 1280",
     pixelBudget: 240000,
     reflectionBudget: 50000,
+    reflectionInterval: 100,
   },
 };
 
@@ -265,6 +266,7 @@ export async function createGallery(host, artworks, callbacks) {
     backZ,
     benches,
     reflectionBudget: profile.reflectionBudget,
+    reflectionInterval: profile.reflectionInterval,
   });
   // Two shared lights shade the frames and upholstery. Architecture is lightmapped.
   entity("a-light", {
