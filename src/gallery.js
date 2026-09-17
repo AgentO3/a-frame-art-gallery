@@ -16,8 +16,8 @@ const RENDER_PROFILES = {
   software: {
     renderer:
       "antialias: false; colorManagement: true; maxCanvasWidth: 1280; maxCanvasHeight: 1280",
-    pixelBudget: 600000,
-    reflectionBudget: 240000,
+    pixelBudget: 240000,
+    reflectionBudget: 50000,
   },
 };
 
